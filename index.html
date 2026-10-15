@@ -240,44 +240,68 @@
       .footer-inner { padding:25px 18px; }
     }
   </style>
+  <style>
+    /* Marketplace polish: familiar grocery browsing without copying another brand. */
+    .market-top { display:flex; align-items:center; gap:18px; }
+    .market-promise { color:var(--muted); font-size:12px; font-weight:650; white-space:nowrap; }
+    .market-promise b { color:var(--green); }
+    .hero { grid-template-columns:1.08fr .92fr; padding:48px 46px; }
+    .hero h1 { max-width:590px; }
+    .hero-art { min-height:335px; }
+    .photo-shelf { position:relative; width:min(100%,470px); min-height:300px; display:grid; grid-template-columns:1fr 1fr; gap:13px; padding:18px; border:1px solid rgba(255,255,255,.9); border-radius:28px; background:rgba(255,255,255,.55); box-shadow:0 18px 46px rgba(30,64,44,.08); transform:rotate(1deg); }
+    .shelf-photo { min-height:125px; display:grid; place-items:center; overflow:hidden; border:1px solid rgba(231,233,223,.9); border-radius:19px; background:linear-gradient(145deg,#f8f7f0,#edf2e5); }
+    .shelf-photo img { width:100%; height:100%; max-height:135px; object-fit:contain; mix-blend-mode:multiply; }
+    .floating-note { z-index:1; }
+    .trust-inner { flex-wrap:wrap; }
+    .catalog-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:2px 0 15px; color:var(--muted); font-size:12px; }
+    .catalog-topline strong { color:var(--ink); }
+    .market-sort { padding:9px 12px; border:1px solid var(--line); border-radius:11px; background:#fff; color:var(--ink); font:inherit; font-size:12px; }
+    .product-card { position:relative; padding:12px; }
+    .product-photo { height:178px; overflow:hidden; background:linear-gradient(145deg,#f8f8f3,#f0f2ea); }
+    .product-photo img { width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; transition:transform .22s ease; }
+    .product-card:hover .product-photo img { transform:scale(1.04); }
+    .product-photo .product-tag { z-index:1; }
+    .product-brand { margin:14px 0 4px !important; color:#78857b !important; font-size:10px !important; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
+    .product-card h3 { min-height:35px; margin:0 0 5px; font-size:15px; line-height:1.25; }
+    .product-card .product-detail { min-height:16px; }
+    .photo-credit { display:inline-block; margin-top:8px; color:#68796f; font-size:10px; text-decoration:underline; text-underline-offset:2px; }
+    .add-btn { flex:none; width:39px; height:39px; border-radius:50%; }
+    .cart-line .mini { overflow:hidden; }
+    .cart-line .mini img { width:100%; height:100%; object-fit:contain; }
+    .market-search input { height:54px; font-size:14px; }
+    @media(max-width:900px) { .market-promise { display:none; } .photo-shelf { min-height:265px; } .product-photo { height:155px; } }
+    @media(max-width:650px) { .hero { grid-template-columns:1fr; } .hero-art { min-height:255px; } .photo-shelf { width:min(100%,360px); min-height:230px; padding:12px; gap:9px; } .shelf-photo { min-height:95px; } .shelf-photo img { max-height:110px; } .product-photo { height:128px; } .catalog-topline { align-items:flex-start; flex-direction:column; } .market-sort { align-self:flex-end; } }
+  </style>
 </head>
 <body>
   <div class="topnote"><strong>Konzept-Demo</strong> · Beispielprodukte, Beispielpreise und keine echte Lieferung</div>
   <header class="site-header">
     <nav class="nav" aria-label="Hauptnavigation">
       <a class="brand" href="#start" aria-label="Kiezkorb Startseite"><span class="brand-mark">⌂</span>Kiezkorb</a>
-      <div class="nav-links"><a href="#sortiment">Sortiment</a><a href="#ablauf">So funktioniert’s</a><a href="#hinweis">Über die Demo</a></div>
+      <div class="market-top"><div class="nav-links"><a href="#sortiment">Sortiment</a><a href="#ablauf">So funktioniert’s</a><a href="#hinweis">Über die Demo</a></div><span class="market-promise"><b>5,00 €</b> Beispiel-Lieferpauschale</span></div>
       <button class="cart-trigger" id="jumpCart" type="button">Warenkorb <span class="cart-count" id="navCount">0</span></button>
     </nav>
   </header>
   <main id="start">
     <section class="hero">
       <div>
-        <div class="eyebrow"><span class="dot"></span> Einkaufen ums Eck, einfacher gedacht</div>
-        <h1>Gutes aus dem Viertel. <em>Zu dir.</em></h1>
-        <p class="hero-copy">Ein übersichtlicher Einkauf an einem Ort: ausgewählte Alltagsprodukte aus lokalen Geschäften, mit klarer Lieferpauschale und planbaren Zeitfenstern.</p>
-        <div class="hero-actions"><a class="primary-btn" href="#sortiment">Demo-Sortiment ansehen <span>↘</span></a><a class="text-link" href="#ablauf">So wäre der Ablauf</a></div>
-        <div class="micro-trust"><span>✓ Klare Preise</span><span>✓ Lokale Geschäfte</span><span>✓ Einfache Bestellung</span></div>
+        <div class="eyebrow"><span class="dot"></span> Dein lokaler Einkauf an einem Ort</div>
+        <h1>Alles für den Einkauf. <em>Einfach im Korb.</em></h1>
+        <p class="hero-copy">Produkte finden, Preise vergleichen und den Warenkorb planen – so einfach wie in einem vertrauten Online-Shop. Diese Vorschau nutzt echte Produktfotos und klar gekennzeichnete Beispielpreise.</p>
+        <div class="hero-actions"><a class="primary-btn" href="#sortiment">Jetzt Produkte entdecken <span>↘</span></a><a class="text-link" href="#hinweis">Was die Demo zeigt</a></div>
+        <div class="micro-trust"><span>✓ Produktbilder mit Quelle</span><span>✓ Warenkorb im Browser</span><span>✓ Keine echte Bestellung</span></div>
       </div>
       <div class="hero-art" aria-hidden="true">
-        <div class="art-orbit"></div>
-        <div class="art-card">
-          <div class="art-card-head"><span>Dein Einkauf</span><span>Beispielkorb</span></div>
-          <div class="basket-items">
-            <div class="basket-row"><span class="basket-emoji">🍎</span><span>Äpfel, regional<small>1 kg · Obst & Gemüse</small></span><b>2,49 €</b></div>
-            <div class="basket-row"><span class="basket-emoji">🥛</span><span>Frische Milch<small>1 l · Kühlregal</small></span><b>1,19 €</b></div>
-            <div class="basket-row"><span class="basket-emoji">🍞</span><span>Ofenbrot<small>500 g · Bäckerei</small></span><b>2,80 €</b></div>
-          </div>
-          <div class="art-total"><span>Mit Lieferung (Beispiel)</span><strong>11,48 €</strong></div>
-        </div>
-        <div class="floating-note"><span>🌿</span>Aus der Nachbarschaft</div>
+        <div class="photo-shelf"><div class="shelf-photo"><img src="https://images.openfoodfacts.org/images/products/301/762/042/2003/front_en.879.400.jpg" alt="Nutella-Glas"></div><div class="shelf-photo"><img src="https://images.openfoodfacts.org/images/products/544/900/000/0996/front_en.1129.400.jpg" alt="Coca-Cola-Dose"></div><div class="shelf-photo"><img src="https://images.openfoodfacts.org/images/products/762/221/044/9283/front_en.605.400.jpg" alt="Prince-Kekspackung"></div><div class="shelf-photo"><img src="https://images.openfoodfacts.org/images/products/807/680/019/5057/front_en.3881.400.jpg" alt="Barilla-Spaghetti-Packung"></div></div>
+        <div class="floating-note"><span>🛒</span>Ein Korb für alles</div>
       </div>
     </section>
-    <div class="trust-strip"><div class="trust-inner"><div class="trust-item"><strong>Einfach geplant</strong><span>für den Einkauf im Viertel</span></div><div class="trust-item">🧺 Sortiment an einem Ort</div><div class="trust-item">🚲 Geplante Lieferrouten</div><div class="trust-item">€ 5,00 Beispiel-Lieferpauschale</div></div></div>
+    <div class="trust-strip"><div class="trust-inner"><div class="trust-item"><strong>Übersichtlich einkaufen</strong><span>mit Suche und Kategorien</span></div><div class="trust-item">🧺 Ein gemeinsamer Warenkorb</div><div class="trust-item">📷 Echte Produktfotos</div><div class="trust-item">€ 5,00 Beispiel-Lieferpauschale</div></div></div>
 
     <section class="section" id="sortiment">
-      <div class="section-heading"><div><div class="eyebrow"><span class="dot"></span> Das Demo-Sortiment</div><h2>Dein Einkauf, ganz entspannt.</h2></div><p>Nur Beispieldaten: keine aktuellen Marktpreise<br>und keine bestätigte Verfügbarkeit.</p></div>
-      <div class="shop-tools"><label class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="Produkt suchen …" aria-label="Produkte suchen"></label><div class="filter-row" id="filters" aria-label="Kategorien filtern"></div></div>
+      <div class="section-heading"><div><div class="eyebrow"><span class="dot"></span> Der Kiezkorb-Marktplatz</div><h2>Was darf in deinen Einkauf?</h2></div><p>4 bebilderte Beispielprodukte<br>mit frei zugänglicher Bildquelle.</p></div>
+      <div class="shop-tools"><label class="search-wrap market-search"><span>⌕</span><input id="search" type="search" placeholder="Was suchst du? Zum Beispiel Nudeln …" aria-label="Produkte suchen"></label><div class="filter-row" id="filters" aria-label="Kategorien filtern"></div></div>
+      <div class="catalog-topline"><span><strong id="resultCount">4 Produkte</strong> · Beispielpreise, nicht live</span><label>Sortieren <select class="market-sort" id="sortProducts" aria-label="Produkte sortieren"><option value="featured">Empfohlen</option><option value="price-asc">Preis: niedrig zuerst</option><option value="price-desc">Preis: hoch zuerst</option></select></label></div>
       <div class="catalog-layout">
         <div class="product-grid" id="productGrid" aria-live="polite"></div>
         <aside class="cart-box" id="cartBox" aria-label="Warenkorb">
@@ -294,9 +318,9 @@
       </div>
     </section>
     <section class="how" id="ablauf"><div class="how-inner"><div><div class="eyebrow"><span class="dot"></span> Einfach & nachvollziehbar</div><h2>Ein guter Einkauf beginnt mit einem klaren Ablauf.</h2><p>Die Demo zeigt, wie ein lokaler Lieferdienst aussehen könnte. Für einen echten Start braucht es zuerst einen teilnehmenden Laden, abgestimmte Produktdaten und eine erwachsene verantwortliche Betreiberin oder einen Betreiber.</p></div><div class="steps"><article class="step"><span class="step-num">01</span><h3>Auswählen</h3><p>Produkte in den Warenkorb legen und die Beispielsumme ansehen.</p></article><article class="step"><span class="step-num">02</span><h3>Route planen</h3><p>Bestellungen aus derselben Gegend für ein Zeitfenster bündeln.</p></article><article class="step"><span class="step-num">03</span><h3>Lokal liefern</h3><p>Nur bestätigte Bestellungen und echte Verfügbarkeit versprechen.</p></article></div></div></section>
-    <section class="section" id="hinweis" style="padding-top:45px;padding-bottom:45px"><div class="section-heading" style="margin:0"><div><div class="eyebrow"><span class="dot"></span> Transparenz</div><h2 style="font-size:25px">Was diese Website kann – und was noch nicht.</h2></div><p>Dies ist eine rein lokale Frontend-Demo. Sie speichert nichts,<br>fragt keine echten Bestellungen ab und verschickt keine E-Mails.</p></div></section>
+    <section class="section" id="hinweis" style="padding-top:45px;padding-bottom:45px"><div class="section-heading" style="margin:0"><div><div class="eyebrow"><span class="dot"></span> Transparenz</div><h2 style="font-size:25px">Was diese Website kann – und was noch nicht.</h2></div><p>Dies ist eine Frontend-Demo. Sie speichert nichts,<br>fragt keine echten Bestellungen ab und verschickt keine E-Mails.</p></div><p class="photo-credit" style="font-size:12px;margin-top:24px">Produktbilder: Open Food Facts, Creative Commons Attribution-ShareAlike (CC BY-SA). Produktdetails und Bildquellen:<br><a href="https://world.openfoodfacts.org/product/3017620422003" target="_blank" rel="noopener noreferrer">Nutella</a> · <a href="https://world.openfoodfacts.org/product/5449000000996" target="_blank" rel="noopener noreferrer">Coca-Cola</a> · <a href="https://world.openfoodfacts.org/product/7622210449283" target="_blank" rel="noopener noreferrer">Prince-Kekse</a> · <a href="https://world.openfoodfacts.org/product/8076800195057" target="_blank" rel="noopener noreferrer">Barilla Spaghetti</a>. Namen und Packungsgrößen sind Produktangaben aus dieser gemeinschaftlichen Datenbank; Preise hier sind frei gewählte Demo-Beispiele.</p></section>
   </main>
-  <footer><div class="footer-inner"><a class="brand" href="#start"><span class="brand-mark">⌂</span>Kiezkorb</a><div class="footer-note">Konzeptdemo ohne echte Händler, Live-Preise, Lieferung oder Bestellannahme. Eine öffentliche Testseite ist kein echter Lieferservice.</div></div></footer>
+  <footer><div class="footer-inner"><a class="brand" href="#start"><span class="brand-mark">⌂</span>Kiezkorb</a><div class="footer-note">Konzeptdemo ohne echte Händler, Live-Preise, Lieferung oder Bestellannahme. Produktfotos von Open Food Facts (CC BY-SA), Quellen und Lizenzhinweis stehen bei Transparenz.</div></div></footer>
 
   <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal">
@@ -321,15 +345,10 @@
 
   <script>
     const products = [
-      {id:1,name:'Äpfel, regional',detail:'1 kg · Obst & Gemüse',price:2.49,category:'Obst & Gemüse',emoji:'🍎',tag:'Regional gedacht'},
-      {id:2,name:'Bananen',detail:'5 Stück · Obst & Gemüse',price:1.79,category:'Obst & Gemüse',emoji:'🍌',tag:''},
-      {id:3,name:'Karotten',detail:'1 kg · Obst & Gemüse',price:1.39,category:'Obst & Gemüse',emoji:'🥕',tag:''},
-      {id:4,name:'Frische Milch',detail:'1 l · Kühlregal',price:1.19,category:'Kühlregal',emoji:'🥛',tag:''},
-      {id:5,name:'Naturjoghurt',detail:'500 g · Kühlregal',price:1.49,category:'Kühlregal',emoji:'🥣',tag:''},
-      {id:6,name:'Ofenbrot',detail:'500 g · Bäckerei',price:2.80,category:'Bäckerei',emoji:'🍞',tag:'Frisch gedacht'},
-      {id:7,name:'Haferflocken',detail:'500 g · Vorrat',price:1.29,category:'Vorrat',emoji:'🌾',tag:''},
-      {id:8,name:'Tomatensauce',detail:'Passata · 500 ml',price:1.59,category:'Vorrat',emoji:'🍅',tag:''},
-      {id:9,name:'Spülmittel',detail:'500 ml · Haushalt',price:2.25,category:'Haushalt',emoji:'🧴',tag:''}
+      {id:1,name:'Nutella',brand:'Ferrero',detail:'400 g · Brotaufstrich',price:3.49,category:'Aufstrich',image:'https://images.openfoodfacts.org/images/products/301/762/042/2003/front_en.879.400.jpg',source:'https://world.openfoodfacts.org/product/3017620422003',tag:'Beliebt'},
+      {id:2,name:'Coca-Cola',brand:'Coca-Cola',detail:'330 ml · Getränk',price:0.99,category:'Getränke',image:'https://images.openfoodfacts.org/images/products/544/900/000/0996/front_en.1129.400.jpg',source:'https://world.openfoodfacts.org/product/5449000000996',tag:''},
+      {id:3,name:'Prince Schoko-Kekse',brand:'Prince',detail:'300 g · Kekse',price:2.19,category:'Süßes',image:'https://images.openfoodfacts.org/images/products/762/221/044/9283/front_en.605.400.jpg',source:'https://world.openfoodfacts.org/product/7622210449283',tag:''},
+      {id:4,name:'Spaghetti N°5',brand:'Barilla',detail:'500 g · Pasta',price:1.49,category:'Vorrat',image:'https://images.openfoodfacts.org/images/products/807/680/019/5057/front_en.3881.400.jpg',source:'https://world.openfoodfacts.org/product/8076800195057',tag:'Küchenklassiker'}
     ];
     const categories = ['Alles', ...new Set(products.map(p=>p.category))];
     const cart = new Map();
@@ -338,13 +357,17 @@
     const grid = document.getElementById('productGrid');
     const filterHost = document.getElementById('filters');
     const search = document.getElementById('search');
+    const sortProducts = document.getElementById('sortProducts');
     function renderFilters(){
       filterHost.innerHTML = categories.map(c=>`<button class="filter-btn ${c===activeCategory?'active':''}" type="button" data-category="${c}">${c}</button>`).join('');
     }
     function renderProducts(){
       const q = search.value.trim().toLocaleLowerCase('de');
-      const visible = products.filter(p=>(activeCategory==='Alles'||p.category===activeCategory) && `${p.name} ${p.detail} ${p.category}`.toLocaleLowerCase('de').includes(q));
-      grid.innerHTML = visible.length ? visible.map(p=>`<article class="product-card"><div class="product-photo"><span>${p.emoji}</span>${p.tag?`<span class="product-tag">${p.tag}</span>`:''}</div><h3>${p.name}</h3><p>${p.detail}</p><div class="product-bottom"><span class="price">${euro(p.price)} <small>/ Beispiel</small></span><button class="add-btn" type="button" data-add="${p.id}" aria-label="${p.name} zum Warenkorb hinzufügen">+</button></div></article>`).join('') : '<div class="empty-results">Dazu haben wir in dieser Demo nichts gefunden. Versuch einen anderen Suchbegriff.</div>';
+      let visible = products.filter(p=>(activeCategory==='Alles'||p.category===activeCategory) && `${p.name} ${p.brand} ${p.detail} ${p.category}`.toLocaleLowerCase('de').includes(q));
+      if(sortProducts.value==='price-asc') visible=[...visible].sort((a,b)=>a.price-b.price);
+      if(sortProducts.value==='price-desc') visible=[...visible].sort((a,b)=>b.price-a.price);
+      document.getElementById('resultCount').textContent=`${visible.length} ${visible.length===1?'Produkt':'Produkte'}`;
+      grid.innerHTML = visible.length ? visible.map(p=>`<article class="product-card"><div class="product-photo"><img src="${p.image}" alt="${p.name} von ${p.brand}" loading="lazy">${p.tag?`<span class="product-tag">${p.tag}</span>`:''}</div><p class="product-brand">${p.brand}</p><h3>${p.name}</h3><p class="product-detail">${p.detail}</p><a class="photo-credit" href="${p.source}" target="_blank" rel="noopener noreferrer">Bildquelle ↗</a><div class="product-bottom"><span class="price">${euro(p.price)} <small>/ Demo</small></span><button class="add-btn" type="button" data-add="${p.id}" aria-label="${p.name} zum Warenkorb hinzufügen">+</button></div></article>`).join('') : '<div class="empty-results">Dazu haben wir in dieser Demo nichts gefunden. Versuch einen anderen Suchbegriff.</div>';
     }
     function renderCart(){
       const entries = [...cart.entries()].map(([id,qty])=>({product:products.find(p=>p.id===id),qty}));
@@ -353,7 +376,7 @@
       document.getElementById('navCount').textContent=count;
       document.getElementById('cartCount').textContent=`${count} ${count===1?'Artikel':'Artikel'}`;
       document.getElementById('checkoutBtn').disabled=count===0;
-      document.getElementById('cartContents').innerHTML = count ? `<div class="cart-lines">${entries.map(({product:p,qty})=>`<div class="cart-line"><span class="mini">${p.emoji}</span><span>${p.name}<small>${euro(p.price)} je Stück</small></span><span class="qty"><button type="button" data-change="${p.id}" data-delta="-1" aria-label="Ein Stück ${p.name} entfernen">−</button><b>${qty}</b><button type="button" data-change="${p.id}" data-delta="1" aria-label="Ein Stück ${p.name} hinzufügen">+</button></span></div>`).join('')}</div>` : '<div class="cart-empty"><b>🧺</b>Dein Korb ist noch leer.<br>Such dir ein paar Demo-Produkte aus.</div>';
+      document.getElementById('cartContents').innerHTML = count ? `<div class="cart-lines">${entries.map(({product:p,qty})=>`<div class="cart-line"><span class="mini"><img src="${p.image}" alt=""></span><span>${p.name}<small>${euro(p.price)} je Packung (Demo)</small></span><span class="qty"><button type="button" data-change="${p.id}" data-delta="-1" aria-label="Ein Stück ${p.name} entfernen">−</button><b>${qty}</b><button type="button" data-change="${p.id}" data-delta="1" aria-label="Ein Stück ${p.name} hinzufügen">+</button></span></div>`).join('')}</div>` : '<div class="cart-empty"><b>🧺</b>Dein Korb ist noch leer.<br>Such dir ein paar Demo-Produkte aus.</div>';
       const summary=document.getElementById('cartSummary');
       summary.hidden=count===0;
       document.getElementById('subtotal').textContent=euro(subtotal);
@@ -362,6 +385,7 @@
     function showToast(text){const t=document.getElementById('toast');t.textContent=text;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1900);}
     filterHost.addEventListener('click',e=>{const btn=e.target.closest('[data-category]');if(!btn)return;activeCategory=btn.dataset.category;renderFilters();renderProducts();});
     search.addEventListener('input',renderProducts);
+    sortProducts.addEventListener('change',renderProducts);
     grid.addEventListener('click',e=>{const btn=e.target.closest('[data-add]');if(!btn)return;const id=Number(btn.dataset.add);cart.set(id,(cart.get(id)||0)+1);renderCart();showToast('Zum Demo-Warenkorb hinzugefügt');});
     document.getElementById('cartContents').addEventListener('click',e=>{const btn=e.target.closest('[data-change]');if(!btn)return;const id=Number(btn.dataset.change), next=(cart.get(id)||0)+Number(btn.dataset.delta);if(next<=0)cart.delete(id);else cart.set(id,next);renderCart();});
     document.getElementById('jumpCart').addEventListener('click',()=>document.getElementById('cartBox').scrollIntoView({behavior:'smooth',block:'center'}));

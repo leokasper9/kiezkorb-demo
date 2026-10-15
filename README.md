@@ -1,10 +1,12 @@
 # Kiezkorb – Konzeptdemo
 
-Eine einzelne HTML-Datei mit CSS und JavaScript. Sie zeigt einen Beispielkatalog, Suche, Kategorien, Warenkorb und einen Test-Checkout.
+Eine einzelne HTML-Datei mit CSS und JavaScript. Sie zeigt einen kleinen Marktplatz-Demo-Katalog mit echten, verlinkten Produktfotos, Suche, Kategorien, Sortierung, Warenkorb und einem Test-Checkout.
 
 ## Wichtig
 
 - Alle Produkte und Preise sind Beispieldaten.
+- Produktfotos stammen aus Open Food Facts. Die Quelle und die Creative Commons Attribution-ShareAlike-Lizenz (CC BY-SA) sind auf der Website angegeben.
+- Die Beispieldatenbank von Open Food Facts ist gemeinschaftlich gepflegt; Angaben können unvollständig oder nicht aktuell sein.
 - Der Checkout ist nur eine Demo. Er speichert nichts und versendet keine E-Mail.
 - Bitte keine echten Namen, Adressen, Telefonnummern oder E-Mail-Adressen eingeben.
 - Für echte Bestellungen braucht es einen Server, ein geschütztes Postfach, Datenschutzinformationen, einen teilnehmenden Händler und eine erwachsene verantwortliche Person.

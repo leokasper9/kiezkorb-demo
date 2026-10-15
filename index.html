@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8f3">
+  <meta name="description" content="Kiezkorb – eine lokale Einkaufslieferung als interaktive Konzeptdemo.">
+  <title>Kiezkorb – Gutes aus dem Viertel</title>
+  <style>
+    :root {
+      --ink: #19352b;
+      --muted: #687a70;
+      --green: #286b4e;
+      --green-dark: #1d543b;
+      --lime: #d9ed9d;
+      --cream: #f6f8f3;
+      --paper: #fff;
+      --line: #e5ebe3;
+      --peach: #f5e4d5;
+      --shadow: 0 18px 45px rgba(34, 62, 46, .08);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    .topnote { background: var(--ink); color: #eef5e8; text-align: center; padding: 9px 16px; font-size: 12px; letter-spacing: .02em; }
+    .topnote strong { color: var(--lime); font-weight: 700; }
+    .site-header { position: sticky; top: 0; z-index: 10; background: rgba(246,248,243,.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(229,235,227,.85); }
+    .nav { max-width: 1160px; height: 76px; margin: auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display:flex; align-items:center; gap: 11px; text-decoration:none; font-weight: 850; letter-spacing:-.04em; font-size: 21px; }
+    .brand-mark { display:grid; place-items:center; width:38px; height:38px; border-radius:13px; background:var(--lime); color:var(--green-dark); font-size:20px; }
+    .nav-links { display:flex; align-items:center; gap:29px; color:var(--muted); font-size:14px; font-weight:600; }
+    .nav-links a { text-decoration:none; }
+    .nav-links a:hover { color:var(--green); }
+    .cart-trigger { border:0; border-radius:999px; padding:11px 15px; background:var(--green); color:white; font-weight:700; display:flex; align-items:center; gap:9px; box-shadow:0 6px 16px rgba(40,107,78,.18); }
+    .cart-count { display:inline-grid; place-items:center; width:23px; height:23px; border-radius:50%; background:var(--lime); color:var(--ink); font-size:12px; }
+    main { overflow:hidden; }
+    .hero { max-width:1160px; margin:0 auto; padding:64px 24px 52px; display:grid; grid-template-columns:1.04fr .96fr; align-items:center; gap:42px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; color:var(--green); font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.12em; }
+    .eyebrow .dot { width:8px; height:8px; border-radius:50%; background:#87b758; box-shadow:0 0 0 4px #e7f0dc; }
+    h1 { max-width:620px; margin:18px 0; font-size:clamp(42px, 6vw, 70px); line-height:.99; letter-spacing:-.065em; }
+    h1 em { font-style:normal; color:var(--green); }
+    .hero-copy { max-width:525px; color:var(--muted); font-size:17px; line-height:1.65; }
+    .hero-actions { display:flex; align-items:center; gap:16px; margin:27px 0 0; flex-wrap:wrap; }
+    .primary-btn { display:inline-flex; align-items:center; justify-content:center; gap:9px; border:0; border-radius:13px; padding:14px 19px; background:var(--green); color:white; font-weight:750; text-decoration:none; transition:.18s ease; }
+    .primary-btn:hover { background:var(--green-dark); transform:translateY(-1px); }
+    .text-link { color:var(--green); font-size:14px; font-weight:700; text-decoration:none; }
+    .micro-trust { display:flex; gap:18px; flex-wrap:wrap; margin-top:28px; color:var(--muted); font-size:12px; }
+    .micro-trust span { display:flex; align-items:center; gap:6px; }
+    .hero-art { position:relative; min-height:370px; display:grid; place-items:center; }
+    .art-orbit { position:absolute; width:min(100%,470px); aspect-ratio:1; border-radius:50%; background:#e7efd9; }
+    .art-card { position:relative; width:min(88%,410px); padding:23px; border:1px solid rgba(255,255,255,.75); border-radius:26px; background:rgba(255,255,255,.86); box-shadow:var(--shadow); transform:rotate(2deg); }
+    .art-card-head { display:flex; justify-content:space-between; align-items:center; padding-bottom:15px; border-bottom:1px solid var(--line); font-size:13px; font-weight:800; }
+    .art-card-head span:last-child { color:var(--green); font-size:11px; background:#edf5e5; border-radius:99px; padding:7px 10px; }
+    .basket-items { display:grid; gap:12px; padding:16px 0; }
+    .basket-row { display:flex; align-items:center; gap:12px; font-size:13px; font-weight:650; }
+    .basket-emoji { display:grid; place-items:center; width:40px; height:40px; border-radius:13px; background:#f3f6ed; font-size:21px; }
+    .basket-row small { display:block; margin-top:3px; color:var(--muted); font-size:11px; font-weight:500; }
+    .basket-row b { margin-left:auto; }
+    .art-total { display:flex; justify-content:space-between; padding-top:14px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); }
+    .art-total strong { color:var(--ink); font-size:16px; }
+    .floating-note { position:absolute; right:0; bottom:28px; padding:13px 16px; border-radius:15px; background:#fff; box-shadow:var(--shadow); font-size:12px; font-weight:750; transform:rotate(-4deg); }
+    .floating-note span { margin-right:7px; }
+    .trust-strip { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(255,255,255,.55); }
+    .trust-inner { max-width:1160px; margin:auto; padding:19px 24px; display:flex; align-items:center; justify-content:space-between; gap:18px; color:var(--muted); font-size:12px; }
+    .trust-inner strong { color:var(--ink); }
+    .trust-item { display:flex; gap:9px; align-items:center; }
+    .section { max-width:1160px; margin:auto; padding:68px 24px; }
+    .section-heading { display:flex; justify-content:space-between; align-items:end; gap:22px; margin-bottom:23px; }
+    .section-heading h2 { margin:8px 0 0; font-size:clamp(27px,4vw,40px); letter-spacing:-.045em; }
+    .section-heading p { margin:0; color:var(--muted); font-size:14px; line-height:1.5; }
+    .shop-tools { display:flex; gap:12px; margin-bottom:20px; }
+    .search-wrap { flex:1; position:relative; }
+    .search-wrap span { position:absolute; left:15px; top:50%; transform:translateY(-50%); color:#829087; }
+    .search-wrap input { width:100%; height:48px; padding:0 15px 0 43px; border:1px solid var(--line); border-radius:13px; outline:none; background:#fff; color:var(--ink); }
+    .search-wrap input:focus { border-color:#9cb99e; box-shadow:0 0 0 3px #e4efdf; }
+    .filter-row { display:flex; gap:8px; overflow:auto; padding-bottom:4px; }
+    .filter-btn { flex:none; border:1px solid var(--line); border-radius:99px; padding:11px 15px; background:#fff; color:var(--muted); font-size:12px; font-weight:700; }
+    .filter-btn.active { border-color:var(--green); background:var(--green); color:#fff; }
+    .catalog-layout { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:23px; align-items:start; }
+    .product-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .product-card { min-width:0; padding:14px; border:1px solid var(--line); border-radius:18px; background:#fff; transition:.18s ease; }
+    .product-card:hover { border-color:#c6d8c6; transform:translateY(-2px); box-shadow:0 12px 25px rgba(34,62,46,.06); }
+    .product-photo { height:133px; display:grid; place-items:center; border-radius:13px; background:#f3f6ed; font-size:59px; position:relative; }
+    .product-tag { position:absolute; top:9px; left:9px; padding:6px 8px; border-radius:99px; background:#fff; color:var(--green); font-size:9px; font-weight:800; }
+    .product-card h3 { margin:13px 0 4px; font-size:14px; letter-spacing:-.02em; }
+    .product-card p { margin:0; color:var(--muted); font-size:11px; }
+    .product-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:15px; gap:8px; }
+    .price { font-size:15px; font-weight:850; }
+    .price small { color:var(--muted); font-size:10px; font-weight:500; }
+    .add-btn { width:34px; height:34px; border:0; border-radius:11px; background:var(--lime); color:var(--green-dark); font-size:20px; font-weight:750; }
+    .add-btn:hover { background:#c9e67e; }
+    .empty-results { grid-column:1/-1; padding:35px; text-align:center; color:var(--muted); border:1px dashed #cbd7cb; border-radius:18px; background:#fff; }
+    .cart-box { position:sticky; top:96px; padding:20px; border:1px solid var(--line); border-radius:20px; background:#fff; box-shadow:0 12px 36px rgba(34,62,46,.045); }
+    .cart-title { display:flex; align-items:center; justify-content:space-between; font-size:16px; font-weight:850; }
+    .cart-title span { color:var(--muted); font-size:11px; font-weight:600; }
+    .cart-empty { padding:28px 8px; text-align:center; color:var(--muted); font-size:12px; line-height:1.5; }
+    .cart-empty b { display:block; margin:0 0 8px; font-size:30px; }
+    .cart-lines { display:grid; gap:13px; margin:18px 0; }
+    .cart-line { display:grid; grid-template-columns:36px 1fr auto; gap:9px; align-items:center; font-size:12px; }
+    .cart-line .mini { display:grid; place-items:center; width:36px; height:36px; border-radius:10px; background:#f3f6ed; font-size:18px; }
+    .cart-line small { display:block; color:var(--muted); margin-top:3px; }
+    .qty { display:flex; align-items:center; gap:7px; }
+    .qty button { width:23px; height:23px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink); }
+    .qty b { min-width:12px; text-align:center; }
+    .cart-summary { border-top:1px solid var(--line); padding-top:14px; display:grid; gap:9px; color:var(--muted); font-size:12px; }
+    .sum-row { display:flex; justify-content:space-between; gap:10px; }
+    .sum-row.total { padding-top:5px; color:var(--ink); font-size:16px; font-weight:850; }
+    .checkout-btn { width:100%; margin-top:16px; padding:13px; border:0; border-radius:12px; background:var(--green); color:white; font-weight:800; }
+    .checkout-btn:disabled { cursor:not-allowed; background:#aeb9af; }
+    .cart-footnote { margin:11px 0 0; text-align:center; color:var(--muted); font-size:10px; line-height:1.45; }
+    .how { background:#eaf0e3; }
+    .how-inner { max-width:1160px; margin:auto; padding:58px 24px; display:grid; grid-template-columns:.85fr 1.15fr; gap:50px; align-items:center; }
+    .how h2 { margin:9px 0 13px; font-size:clamp(28px,4vw,42px); letter-spacing:-.05em; }
+    .how p { max-width:430px; color:var(--muted); font-size:14px; line-height:1.65; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:13px; }
+    .step { padding:17px; border:1px solid rgba(40,107,78,.12); border-radius:16px; background:rgba(255,255,255,.72); }
+    .step-num { display:grid; place-items:center; width:28px; height:28px; border-radius:9px; background:var(--lime); color:var(--green-dark); font-size:12px; font-weight:850; }
+    .step h3 { margin:13px 0 6px; font-size:13px; }
+    .step p { margin:0; font-size:11px; line-height:1.5; }
+    footer { background:var(--ink); color:#eaf2e8; }
+    .footer-inner { max-width:1160px; margin:auto; padding:27px 24px; display:flex; justify-content:space-between; gap:20px; align-items:center; font-size:11px; }
+    .footer-inner .brand { color:white; font-size:16px; }
+    .footer-note { max-width:600px; color:#c6d2c8; line-height:1.5; text-align:right; }
+    .modal-backdrop { position:fixed; inset:0; z-index:30; display:none; place-items:center; padding:18px; background:rgba(16,32,25,.6); backdrop-filter:blur(5px); }
+    .modal-backdrop.open { display:grid; }
+    .modal { width:min(100%,510px); max-height:min(92vh,760px); overflow:auto; padding:24px; border-radius:22px; background:#fff; box-shadow:0 25px 80px rgba(0,0,0,.22); }
+    .modal-top { display:flex; justify-content:space-between; align-items:start; gap:15px; }
+    .modal-top h2 { margin:0; font-size:25px; letter-spacing:-.04em; }
+    .modal-top p { margin:6px 0 0; color:var(--muted); font-size:12px; }
+    .close-btn { width:34px; height:34px; border:1px solid var(--line); border-radius:10px; background:#fff; font-size:18px; }
+    .demo-warning { margin:18px 0; padding:12px 13px; border:1px solid #f0d6b3; border-radius:12px; background:#fff7e9; color:#725025; font-size:11px; line-height:1.5; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .field { display:grid; gap:6px; font-size:11px; font-weight:750; color:var(--ink); }
+    .field.full { grid-column:1/-1; }
+    .field input { width:100%; height:43px; padding:0 11px; border:1px solid var(--line); border-radius:10px; outline:none; background:#fbfcfa; font-size:13px; }
+    .field input:focus { border-color:#9cb99e; box-shadow:0 0 0 3px #e4efdf; }
+    .demo-submit { width:100%; margin-top:17px; padding:13px; border:0; border-radius:12px; background:var(--green); color:white; font-weight:800; }
+    .success { display:none; margin-top:15px; padding:15px; border-radius:12px; background:#edf5e5; color:var(--green-dark); font-size:13px; line-height:1.5; }
+    .success.show { display:block; }
+    .toast { position:fixed; z-index:40; bottom:22px; left:50%; transform:translate(-50%,20px); opacity:0; pointer-events:none; padding:12px 16px; border-radius:12px; background:var(--ink); color:#fff; font-size:12px; box-shadow:var(--shadow); transition:.22s ease; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+    @media (max-width:900px) { .hero { grid-template-columns:1fr .8fr; gap:15px; } .catalog-layout { grid-template-columns:1fr; } .cart-box { position:static; order:-1; } .cart-empty { padding:15px 8px; } .cart-lines { grid-template-columns:repeat(2,1fr); } .how-inner { grid-template-columns:1fr; gap:25px; } }
+    @media (max-width:650px) { .nav { height:64px; padding:0 17px; } .nav-links { display:none; } .hero { padding:43px 18px 35px; grid-template-columns:1fr; } .hero-art { min-height:290px; } .art-orbit { width:300px; } .art-card { width:min(90%,370px); } .floating-note { right:4%; bottom:14px; } .trust-inner { justify-content:center; flex-wrap:wrap; padding:15px 18px; } .trust-item:first-child { flex-basis:100%; justify-content:center; } .section { padding:47px 18px; } .section-heading { align-items:start; flex-direction:column; } .shop-tools { flex-direction:column; } .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .product-card { padding:10px; } .product-photo { height:110px; font-size:48px; } .cart-lines { grid-template-columns:1fr; } .steps { grid-template-columns:1fr; } .how-inner { padding:45px 18px; } .footer-inner { align-items:flex-start; flex-direction:column; padding:24px 18px; } .footer-note { text-align:left; } }
+  </style>
+</head>
+<body>
+  <div class="topnote"><strong>Konzept-Demo</strong> · Beispielprodukte, Beispielpreise und keine echte Lieferung</div>
+  <header class="site-header">
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="brand" href="#start" aria-label="Kiezkorb Startseite"><span class="brand-mark">⌂</span>Kiezkorb</a>
+      <div class="nav-links"><a href="#sortiment">Sortiment</a><a href="#ablauf">So funktioniert’s</a><a href="#hinweis">Über die Demo</a></div>
+      <button class="cart-trigger" id="jumpCart" type="button">Warenkorb <span class="cart-count" id="navCount">0</span></button>
+    </nav>
+  </header>
+  <main id="start">
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Einkaufen ums Eck, einfacher gedacht</div>
+        <h1>Gutes aus dem Viertel. <em>Zu dir.</em></h1>
+        <p class="hero-copy">Ein übersichtlicher Einkauf an einem Ort: ausgewählte Alltagsprodukte aus lokalen Geschäften, mit klarer Lieferpauschale und planbaren Zeitfenstern.</p>
+        <div class="hero-actions"><a class="primary-btn" href="#sortiment">Demo-Sortiment ansehen <span>↘</span></a><a class="text-link" href="#ablauf">So wäre der Ablauf</a></div>
+        <div class="micro-trust"><span>✓ Klare Preise</span><span>✓ Lokale Geschäfte</span><span>✓ Einfache Bestellung</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit"></div>
+        <div class="art-card">
+          <div class="art-card-head"><span>Dein Einkauf</span><span>Beispielkorb</span></div>
+          <div class="basket-items">
+            <div class="basket-row"><span class="basket-emoji">🍎</span><span>Äpfel, regional<small>1 kg · Obst & Gemüse</small></span><b>2,49 €</b></div>
+            <div class="basket-row"><span class="basket-emoji">🥛</span><span>Frische Milch<small>1 l · Kühlregal</small></span><b>1,19 €</b></div>
+            <div class="basket-row"><span class="basket-emoji">🍞</span><span>Ofenbrot<small>500 g · Bäckerei</small></span><b>2,80 €</b></div>
+          </div>
+          <div class="art-total"><span>Mit Lieferung (Beispiel)</span><strong>11,48 €</strong></div>
+        </div>
+        <div class="floating-note"><span>🌿</span>Aus der Nachbarschaft</div>
+      </div>
+    </section>
+    <div class="trust-strip"><div class="trust-inner"><div class="trust-item"><strong>Einfach geplant</strong><span>für den Einkauf im Viertel</span></div><div class="trust-item">🧺 Sortiment an einem Ort</div><div class="trust-item">🚲 Geplante Lieferrouten</div><div class="trust-item">€ 5,00 Beispiel-Lieferpauschale</div></div></div>
+
+    <section class="section" id="sortiment">
+      <div class="section-heading"><div><div class="eyebrow"><span class="dot"></span> Das Demo-Sortiment</div><h2>Dein Einkauf, ganz entspannt.</h2></div><p>Nur Beispieldaten: keine aktuellen Marktpreise<br>und keine bestätigte Verfügbarkeit.</p></div>
+      <div class="shop-tools"><label class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="Produkt suchen …" aria-label="Produkte suchen"></label><div class="filter-row" id="filters" aria-label="Kategorien filtern"></div></div>
+      <div class="catalog-layout">
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+        <aside class="cart-box" id="cartBox" aria-label="Warenkorb">
+          <div class="cart-title">Dein Warenkorb <span id="cartCount">0 Artikel</span></div>
+          <div id="cartContents"></div>
+          <div class="cart-summary" id="cartSummary" hidden>
+            <div class="sum-row"><span>Zwischensumme</span><b id="subtotal">0,00 €</b></div>
+            <div class="sum-row"><span>Lieferpauschale (Demo)</span><b>5,00 €</b></div>
+            <div class="sum-row total"><span>Gesamt</span><b id="total">0,00 €</b></div>
+          </div>
+          <button class="checkout-btn" id="checkoutBtn" type="button" disabled>Test-Checkout öffnen</button>
+          <p class="cart-footnote">Testmodus: Bitte keine echten persönlichen Daten eingeben.</p>
+        </aside>
+      </div>
+    </section>
+    <section class="how" id="ablauf"><div class="how-inner"><div><div class="eyebrow"><span class="dot"></span> Einfach & nachvollziehbar</div><h2>Ein guter Einkauf beginnt mit einem klaren Ablauf.</h2><p>Die Demo zeigt, wie ein lokaler Lieferdienst aussehen könnte. Für einen echten Start braucht es zuerst einen teilnehmenden Laden, abgestimmte Produktdaten und eine erwachsene verantwortliche Betreiberin oder einen Betreiber.</p></div><div class="steps"><article class="step"><span class="step-num">01</span><h3>Auswählen</h3><p>Produkte in den Warenkorb legen und die Beispielsumme ansehen.</p></article><article class="step"><span class="step-num">02</span><h3>Route planen</h3><p>Bestellungen aus derselben Gegend für ein Zeitfenster bündeln.</p></article><article class="step"><span class="step-num">03</span><h3>Lokal liefern</h3><p>Nur bestätigte Bestellungen und echte Verfügbarkeit versprechen.</p></article></div></div></section>
+    <section class="section" id="hinweis" style="padding-top:45px;padding-bottom:45px"><div class="section-heading" style="margin:0"><div><div class="eyebrow"><span class="dot"></span> Transparenz</div><h2 style="font-size:25px">Was diese Website kann – und was noch nicht.</h2></div><p>Dies ist eine rein lokale Frontend-Demo. Sie speichert nichts,<br>fragt keine echten Bestellungen ab und verschickt keine E-Mails.</p></div></section>
+  </main>
+  <footer><div class="footer-inner"><a class="brand" href="#start"><span class="brand-mark">⌂</span>Kiezkorb</a><div class="footer-note">Konzeptdemo ohne echte Händler, Live-Preise, Lieferung oder Bestellannahme. Eine öffentliche Testseite ist kein echter Lieferservice.</div></div></footer>
+
+  <div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-top"><div><h2 id="modalTitle">Test-Checkout</h2><p>Nur zum Ausprobieren des Ablaufs.</p></div><button class="close-btn" id="closeModal" aria-label="Schließen" type="button">×</button></div>
+      <div class="demo-warning"><strong>Bitte keine echten Daten eingeben.</strong> Diese Demo hat keinen Bestellserver. Die Angaben bleiben nur während dieses Seitenaufrufs im Browser und werden weder gespeichert noch per E-Mail versendet.</div>
+      <form id="checkoutForm">
+        <div class="form-grid">
+          <label class="field">Vorname<input name="firstName" autocomplete="off" required placeholder="Demo-Vorname"></label>
+          <label class="field">Nachname<input name="lastName" autocomplete="off" required placeholder="Demo-Nachname"></label>
+          <label class="field full">Straße und Hausnummer<input name="street" autocomplete="off" required placeholder="Musterstraße 1"></label>
+          <label class="field">Postleitzahl<input name="zip" autocomplete="off" inputmode="numeric" required placeholder="12345"></label>
+          <label class="field">Ort<input name="city" autocomplete="off" required placeholder="Musterstadt"></label>
+          <label class="field">E-Mail (nur Demo)<input name="email" type="email" autocomplete="off" required placeholder="demo@example.test"></label>
+          <label class="field">Telefon (optional)<input name="phone" type="tel" autocomplete="off" placeholder="Keine echte Nummer"></label>
+        </div>
+        <button class="demo-submit" type="submit">Demo-Bestellung anzeigen</button>
+      </form>
+      <div class="success" id="successMessage" role="status"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const products = [
+      {id:1,name:'Äpfel, regional',detail:'1 kg · Obst & Gemüse',price:2.49,category:'Obst & Gemüse',emoji:'🍎',tag:'Regional gedacht'},
+      {id:2,name:'Bananen',detail:'5 Stück · Obst & Gemüse',price:1.79,category:'Obst & Gemüse',emoji:'🍌',tag:''},
+      {id:3,name:'Karotten',detail:'1 kg · Obst & Gemüse',price:1.39,category:'Obst & Gemüse',emoji:'🥕',tag:''},
+      {id:4,name:'Frische Milch',detail:'1 l · Kühlregal',price:1.19,category:'Kühlregal',emoji:'🥛',tag:''},
+      {id:5,name:'Naturjoghurt',detail:'500 g · Kühlregal',price:1.49,category:'Kühlregal',emoji:'🥣',tag:''},
+      {id:6,name:'Ofenbrot',detail:'500 g · Bäckerei',price:2.80,category:'Bäckerei',emoji:'🍞',tag:'Frisch gedacht'},
+      {id:7,name:'Haferflocken',detail:'500 g · Vorrat',price:1.29,category:'Vorrat',emoji:'🌾',tag:''},
+      {id:8,name:'Tomatensauce',detail:'Passata · 500 ml',price:1.59,category:'Vorrat',emoji:'🍅',tag:''},
+      {id:9,name:'Spülmittel',detail:'500 ml · Haushalt',price:2.25,category:'Haushalt',emoji:'🧴',tag:''}
+    ];
+    const categories = ['Alles', ...new Set(products.map(p=>p.category))];
+    const cart = new Map();
+    let activeCategory = 'Alles';
+    const euro = n => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(n);
+    const grid = document.getElementById('productGrid');
+    const filterHost = document.getElementById('filters');
+    const search = document.getElementById('search');
+    function renderFilters(){
+      filterHost.innerHTML = categories.map(c=>`<button class="filter-btn ${c===activeCategory?'active':''}" type="button" data-category="${c}">${c}</button>`).join('');
+    }
+    function renderProducts(){
+      const q = search.value.trim().toLocaleLowerCase('de');
+      const visible = products.filter(p=>(activeCategory==='Alles'||p.category===activeCategory) && `${p.name} ${p.detail} ${p.category}`.toLocaleLowerCase('de').includes(q));
+      grid.innerHTML = visible.length ? visible.map(p=>`<article class="product-card"><div class="product-photo"><span>${p.emoji}</span>${p.tag?`<span class="product-tag">${p.tag}</span>`:''}</div><h3>${p.name}</h3><p>${p.detail}</p><div class="product-bottom"><span class="price">${euro(p.price)} <small>/ Beispiel</small></span><button class="add-btn" type="button" data-add="${p.id}" aria-label="${p.name} zum Warenkorb hinzufügen">+</button></div></article>`).join('') : '<div class="empty-results">Dazu haben wir in dieser Demo nichts gefunden. Versuch einen anderen Suchbegriff.</div>';
+    }
+    function renderCart(){
+      const entries = [...cart.entries()].map(([id,qty])=>({product:products.find(p=>p.id===id),qty}));
+      const count = entries.reduce((s,x)=>s+x.qty,0);
+      const subtotal = entries.reduce((s,x)=>s+x.product.price*x.qty,0);
+      document.getElementById('navCount').textContent=count;
+      document.getElementById('cartCount').textContent=`${count} ${count===1?'Artikel':'Artikel'}`;
+      document.getElementById('checkoutBtn').disabled=count===0;
+      document.getElementById('cartContents').innerHTML = count ? `<div class="cart-lines">${entries.map(({product:p,qty})=>`<div class="cart-line"><span class="mini">${p.emoji}</span><span>${p.name}<small>${euro(p.price)} je Stück</small></span><span class="qty"><button type="button" data-change="${p.id}" data-delta="-1" aria-label="Ein Stück ${p.name} entfernen">−</button><b>${qty}</b><button type="button" data-change="${p.id}" data-delta="1" aria-label="Ein Stück ${p.name} hinzufügen">+</button></span></div>`).join('')}</div>` : '<div class="cart-empty"><b>🧺</b>Dein Korb ist noch leer.<br>Such dir ein paar Demo-Produkte aus.</div>';
+      const summary=document.getElementById('cartSummary');
+      summary.hidden=count===0;
+      document.getElementById('subtotal').textContent=euro(subtotal);
+      document.getElementById('total').textContent=euro(subtotal+5);
+    }
+    function showToast(text){const t=document.getElementById('toast');t.textContent=text;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1900);}
+    filterHost.addEventListener('click',e=>{const btn=e.target.closest('[data-category]');if(!btn)return;activeCategory=btn.dataset.category;renderFilters();renderProducts();});
+    search.addEventListener('input',renderProducts);
+    grid.addEventListener('click',e=>{const btn=e.target.closest('[data-add]');if(!btn)return;const id=Number(btn.dataset.add);cart.set(id,(cart.get(id)||0)+1);renderCart();showToast('Zum Demo-Warenkorb hinzugefügt');});
+    document.getElementById('cartContents').addEventListener('click',e=>{const btn=e.target.closest('[data-change]');if(!btn)return;const id=Number(btn.dataset.change), next=(cart.get(id)||0)+Number(btn.dataset.delta);if(next<=0)cart.delete(id);else cart.set(id,next);renderCart();});
+    document.getElementById('jumpCart').addEventListener('click',()=>document.getElementById('cartBox').scrollIntoView({behavior:'smooth',block:'center'}));
+    const modal=document.getElementById('checkoutModal');
+    document.getElementById('checkoutBtn').addEventListener('click',()=>{modal.classList.add('open');document.getElementById('successMessage').classList.remove('show');});
+    document.getElementById('closeModal').addEventListener('click',()=>modal.classList.remove('open'));
+    modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open');});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open');});
+    document.getElementById('checkoutForm').addEventListener('submit',e=>{e.preventDefault();const count=[...cart.values()].reduce((s,n)=>s+n,0);const total=[...cart.entries()].reduce((s,[id,qty])=>s+products.find(p=>p.id===id).price*qty,0)+5;const msg=document.getElementById('successMessage');msg.innerHTML=`<strong>Demo abgeschlossen — nicht bestellt.</strong><br>Dein Testkorb hätte ${count} Artikel und läge bei ${euro(total)} inklusive 5,00 € Beispiel-Lieferpauschale. Es wurde nichts gespeichert oder versendet.`;msg.classList.add('show');});
+    renderFilters();renderProducts();renderCart();
+  </script>
+</body>
+</html>
